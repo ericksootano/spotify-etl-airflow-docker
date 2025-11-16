@@ -1,5 +1,7 @@
 import polars as pl
+import pandas as pd
 from datetime import date
+
 from src.load import (
     gold_consistent_songs,
     gold_streams_by_country,
@@ -17,10 +19,10 @@ def _build_sample_silver_df() -> pl.DataFrame:
             "streams": [100, 200, 150, 50],
             "url": ["http://a", "http://b", "http://a", "http://c"],
             "date": [
-                pl.date(2017, 1, 1),
-                pl.date(2017, 1, 1),
-                pl.date(2017, 1, 2),
-                pl.date(2017, 1, 2),
+                date(2017, 1, 1),
+                date(2017, 1, 1),
+                date(2017, 1, 2),
+                date(2017, 1, 2),
             ],
             "region": ["us", "us", "mx", "mx"],
             "country": ["United States", "United States", "Mexico", "Mexico"],
@@ -62,7 +64,7 @@ def test_gold_streams_by_country_structure_and_values():
         "avg_daily_streams",
     }
 
-    # streams totales de Song A en us = 100 (solo 1 fila us)
+    # streams totales de Song A en us = 100
     row_us_song_a = df_gold.filter(
         (pl.col("region") == "us") & (pl.col("track_name") == "Song A")
     ).row(0, named=True)
@@ -79,13 +81,21 @@ def test_gold_daily_trends_structure_and_values():
     df_silver = _build_sample_silver_df()
     df_gold = gold_daily_trends(df_silver)
 
+    # columnas esperadas
     assert set(df_gold.columns) == {"date", "total_streams_global"}
 
+    # Convertimos a pandas para hacer aserciones de forma estable
+    pdf = df_gold.to_pandas()
+
     # para 2017-01-01: streams = 100 + 200 = 300
+    day1_value = pdf.loc[
+        pdf["date"] == pd.Timestamp(2017, 1, 1), "total_streams_global"
+    ].iloc[0]
+
     # para 2017-01-02: streams = 150 + 50 = 200
-    row_day1 = df_gold.filter(pl.col("date") == date(2017, 1, 1)).row(0, named=True)
-    row_day2 = df_gold.filter(pl.col("date") == date(2017, 1, 2)).row(0, named=True)
+    day2_value = pdf.loc[
+        pdf["date"] == pd.Timestamp(2017, 1, 2), "total_streams_global"
+    ].iloc[0]
 
-
-    assert row_day1["total_streams_global"] == 300
-    assert row_day2["total_streams_global"] == 200
+    assert day1_value == 300
+    assert day2_value == 200

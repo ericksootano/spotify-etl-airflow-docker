@@ -10,7 +10,7 @@ def gold_consistent_songs(df: pl.DataFrame) -> pl.DataFrame:
         df.group_by(["track_name", "artist"])
         .agg(
             [
-                pl.count().alias("days_in_chart"),
+                pl.len().alias("days_in_chart"),
                 pl.col("position").mean().alias("avg_position"),
             ]
         )
@@ -27,8 +27,8 @@ def gold_streams_by_country(df: pl.DataFrame) -> pl.DataFrame:
         .agg(
             [
                 pl.sum("streams").alias("total_streams"),
-                pl.count().alias("days_in_chart"),
-                (pl.sum("streams") / pl.count()).alias("avg_daily_streams"),
+                pl.len().alias("days_in_chart"),
+                (pl.sum("streams") / pl.len()).alias("avg_daily_streams"),
             ]
         )
         .sort("total_streams", descending=True)
