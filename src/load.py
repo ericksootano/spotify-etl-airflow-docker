@@ -23,7 +23,7 @@ def gold_consistent_songs(df: pl.DataFrame) -> pl.DataFrame:
 # -------------------------------------------------------
 def gold_streams_by_country(df: pl.DataFrame) -> pl.DataFrame:
     return (
-        df.group_by(["region", "track_name", "artist"])
+        df.group_by(["region", "country", "track_name", "artist"])
         .agg(
             [
                 pl.sum("streams").alias("total_streams"),
@@ -33,7 +33,6 @@ def gold_streams_by_country(df: pl.DataFrame) -> pl.DataFrame:
         )
         .sort("total_streams", descending=True)
     )
-
 
 # -------------------------------------------------------
 # GOLD TABLE 3: Tendencias temporales globales

@@ -218,9 +218,7 @@ Eje Y: total_streams_region
 
 - US es el país con más streams individuales.
 
-- Reino Unido (gb), Brasil (br), México (mx), Alemania (de) y España (es) siguen como los mercados más fuertes.
-
-- Países europeos (nl, se) muestran tráfico moderado pero estable.
+- Reino Unido, Brasil, México, Alemania y España aparecen como algunos de los países con mayor volumen de streams. En el dataset originalmente venían como códigos (gb, br, mx, de, es), pero en la capa Silver se normalizan a nombres de país para facilitar la lectura por parte de usuarios de negocio.
 
 ![Top 10 regiones por streams totales](./images/top_regions_streams.png)
 
