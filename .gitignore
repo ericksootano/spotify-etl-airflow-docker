@@ -1,0 +1,14 @@
+# Entorno virtual
+.venv/
+
+# Datos (solo dejamos quizá gold para ejemplos)
+data/bronze/
+data/silver/
+data/gold/
+
+# Archivos de VSCode
+.vscode/
+
+# __pycache__
+__pycache__/
+*.pyc
