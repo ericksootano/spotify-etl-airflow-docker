@@ -40,11 +40,8 @@ def test_transform_spotify_daily_basic_schema():
     assert schema["country"] == pl.String
 
     # 3. region en minúsculas
-    assert df_silver.select(pl.col("region").unique()).to_series().to_list() == [
-        "us",
-        "mx",
-    ]
-
+    regions = df_silver.select(pl.col("region").unique()).to_series().to_list()
+    assert set(regions) == {"us", "mx"}
     # 4. country mapeado correctamente
     # us -> United States (está en REGION_MAPPING)
     # mx -> Mexico (también está en REGION_MAPPING 

@@ -1,0 +1,13 @@
+pyproject.toml
+setup.cfg
+spotify_etl_project.egg-info/PKG-INFO
+spotify_etl_project.egg-info/SOURCES.txt
+spotify_etl_project.egg-info/dependency_links.txt
+spotify_etl_project.egg-info/top_level.txt
+src/__init__.py
+src/config.py
+src/extract.py
+src/load.py
+src/transform.py
+tests/test_gold.py
+tests/test_transform.py
