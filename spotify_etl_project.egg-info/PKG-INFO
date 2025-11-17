@@ -1,6 +1,0 @@
-Metadata-Version: 2.4
-Name: spotify_etl_project
-Version: 0.1.0
-Summary: ETL Spotify Medallion Architecture
-Author: Erickson
-Requires-Python: >=3.10
