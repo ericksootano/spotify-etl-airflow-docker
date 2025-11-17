@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
 
@@ -17,7 +17,8 @@ services:
       retries: 5
 
   airflow-init:
-    image: apache/airflow:2.8.1
+    #image: apache/airflow:2.8.1
+    build: ./docker
     entrypoint: /bin/bash
     command: -c "airflow db init && airflow users create -u admin -p admin -f Admin -l User -r Admin -e admin@example.com"
     depends_on:
@@ -25,10 +26,12 @@ services:
     environment:
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      PYTHONPATH: /opt/airflow:/opt/airflow/src
     user: "${AIRFLOW_UID:-50000}:0"
 
   airflow-webserver:
-    image: apache/airflow:2.8.1
+    #image: apache/airflow:2.8.1
+    build: ./docker
     restart: always
     depends_on:
       - postgres
@@ -36,6 +39,7 @@ services:
     environment:
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      PYTHONPATH: /opt/airflow:/opt/airflow/src
     volumes:
       - ./dags:/opt/airflow/dags
       - ./src:/opt/airflow/src
@@ -46,7 +50,8 @@ services:
     user: "${AIRFLOW_UID:-50000}:0"
 
   airflow-scheduler:
-    image: apache/airflow:2.8.1
+    #image: apache/airflow:2.8.1
+    build: ./docker
     restart: always
     depends_on:
       - postgres
@@ -54,6 +59,7 @@ services:
     environment:
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      PYTHONPATH: /opt/airflow:/opt/airflow/src
     volumes:
       - ./dags:/opt/airflow/dags
       - ./src:/opt/airflow/src
