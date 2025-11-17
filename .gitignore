@@ -1,14 +1,76 @@
-# Entorno virtual
-.venv/
+########################################
+# PYTHON
+########################################
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.pkl
 
-# Datos (solo dejamos quizá gold para ejemplos)
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+########################################
+# AIRFLOW
+########################################
+airflow.db
+airflow-webserver.pid
+logs/
+plugins/
+dags/__pycache__/
+airflow_settings.yaml
+airflow.cfg
+
+########################################
+# DOCKER
+########################################
+*.log
+docker-compose.override.yml
+docker-compose.local.yml
+
+########################################
+# ETL DATA (Medallion)
+########################################
 data/bronze/
 data/silver/
 data/gold/
+data/raw/
+data/tmp/
+data/cache/
 
-# Archivos de VSCode
+########################################
+# ANALYTICS / VISUALIZACIONES
+########################################
+# IGNORAR plots generados automáticamente
+images/generated/
+figures/generated/
+
+# INCLUIR tus visualizaciones y screenshots del README:
+!assets/screenshots/
+!images/
+!figures/
+
+########################################
+# SECRETS
+########################################
+.env
+.env.*
+*.env
+secrets.json
+credentials.json
+spotify_credentials.json
+
+########################################
+# EDITOR / SYSTEM FILES
+########################################
 .vscode/
-
-# __pycache__
-__pycache__/
-*.pyc
+.DS_Store
+Thumbs.db
+desktop.ini
