@@ -345,15 +345,15 @@ docker-compose up --build
 
 ### DAG cargado correctamente en Airflow
 
-![DAG](assets/screenshots/dag-visible.png)
+![DAG](assets/Screenshots/dag-visible.png)
 
 ### Interfaz Web de Airflow
 
-![Airflow UI](assets/screenshots/airflow-ui.png)
+![Airflow UI](assets/Screenshots/airflow-ui.png)
 
 ### Vista Graph del Pipeline
 
-![Graph](assets/screenshots/Airflow-graph.png)
+![Graph](assets/Screenshots/Airflow-graph.png)
 
 ---
 
