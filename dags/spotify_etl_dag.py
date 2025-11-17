@@ -1,6 +1,24 @@
-from airflow import DAG # type: ignore
-from airflow.operators.python import PythonOperator  # type: ignore
+import os
+import sys
 from datetime import datetime
+
+# --- HACK PYTHONPATH -------------------------------------
+# Esto permite que el contenedor Airflow vea el paquete `src`
+# y también que se pueda ejecutar el DAG localmente si se quisiera.
+SRC_PATH_IN_CONTAINER = "/opt/airflow/src"
+
+if SRC_PATH_IN_CONTAINER not in sys.path:
+    sys.path.append(SRC_PATH_IN_CONTAINER)
+
+# Si se ejecuta local fuera de Docker, esto ayuda:
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.append(PROJECT_ROOT)
+# ---------------------------------------------------------
+
+
+from airflow import DAG
+from airflow.operators.python import PythonOperator
 
 from src.extract import extract_spotify_daily
 from src.transform import transform_spotify_daily, save_silver
@@ -14,13 +32,19 @@ from src.config import SILVER_DIR
 
 
 def task_extract():
+    """
+    Lee el CSV desde Bronze usando la función de src.extract
+    y guarda un snapshot en Parquet para la siguiente tarea.
+    """
     df = extract_spotify_daily("spotify_daily.csv")
     df.write_parquet(SILVER_DIR / "bronze_snapshot.parquet")
 
 
 def task_transform():
+    """
+    Transforma el snapshot Bronze -> Silver.
+    """
     import polars as pl
-    from src.config import BRONZE_DIR
 
     df_raw = pl.read_parquet(SILVER_DIR / "bronze_snapshot.parquet")
     df_silver = transform_spotify_daily(df_raw)
@@ -28,6 +52,9 @@ def task_transform():
 
 
 def task_generate_gold():
+    """
+    Genera las 3 tablas Gold a partir de Silver.
+    """
     import polars as pl
 
     df_silver = pl.read_parquet(SILVER_DIR / "spotify_daily_silver.parquet")
@@ -45,14 +72,13 @@ def task_generate_gold():
     save_gold(df_gold3, "gold_daily_trends.parquet")
 
 
-
 with DAG(
     dag_id="spotify_etl_pipeline",
     start_date=datetime(2024, 1, 1),
     schedule_interval="@daily",
     catchup=False,
     tags=["etl", "spotify", "medallion"],
-):
+) as dag:  
 
     extract = PythonOperator(
         task_id="extract",
