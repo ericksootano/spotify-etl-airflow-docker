@@ -7,26 +7,46 @@ __pycache__/
 *.pyd
 *.so
 *.pkl
+*.pyc
+*$py.class
+.Python
 
 # Virtual environments
 .venv/
 venv/
 env/
 ENV/
+.virtualenv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
 
 # Jupyter
 .ipynb_checkpoints/
+*.ipynb_checkpoints
 
 ########################################
 # AIRFLOW
 ########################################
 airflow.db
 airflow-webserver.pid
+airflow-scheduler.pid
 logs/
 plugins/
 dags/__pycache__/
 airflow_settings.yaml
 airflow.cfg
+unittests.cfg
+webserver_config.py
 
 ########################################
 # DOCKER
@@ -38,12 +58,16 @@ docker-compose.local.yml
 ########################################
 # ETL DATA (Medallion)
 ########################################
+# IGNORAR todos los datos generados
 data/bronze/
 data/silver/
 data/gold/
 data/raw/
 data/tmp/
 data/cache/
+
+# Permitir archivos README en carpetas de datos (documentación)
+!data/**/README.md
 
 ########################################
 # ANALYTICS / VISUALIZACIONES
@@ -54,8 +78,9 @@ figures/generated/
 
 # INCLUIR tus visualizaciones y screenshots del README:
 !assets/Screenshots/
-!Screenshots
+!assets/Screenshots/**
 !images/
+!images/**
 !figures/
 
 ########################################
@@ -64,14 +89,31 @@ figures/generated/
 .env
 .env.*
 *.env
+!.env.example
+!.env.template
 secrets.json
 credentials.json
 spotify_credentials.json
+*.key
+*.pem
+*.p12
 
 ########################################
 # EDITOR / SYSTEM FILES
 ########################################
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
 Thumbs.db
 desktop.ini
+
+########################################
+# TEMPORARY FILES
+########################################
+*.tmp
+*.bak
+*.backup
+~*
