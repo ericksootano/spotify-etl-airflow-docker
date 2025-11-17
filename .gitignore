@@ -1,0 +1,89 @@
+########################################
+# ARCHIVOS SENSIBLES DE CONFIGURACIÓN
+########################################
+# Ignorar docker-compose real, pero permitir ejemplo
+docker-compose.yaml
+!docker-compose.example.yaml
+
+# Ignorar config real, pero permitir ejemplo
+src/config.py
+!src/config_example.py
+
+########################################
+# DOCKER
+########################################
+# Ignorar carpeta docker si contiene configuraciones locales
+docker/
+!docker/README.md
+!docker/example/
+
+# Ignorar Dockerfile real si contiene credenciales
+Dockerfile
+!Dockerfile.example
+
+########################################
+# PYTHON / PACKAGING
+########################################
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+
+########################################
+# TESTING / JUPYTER
+########################################
+.pytest_cache/
+.ipynb_checkpoints/
+
+########################################
+# AIRFLOW
+########################################
+airflow.db
+airflow-webserver.pid
+airflow-scheduler.pid
+logs/
+plugins/
+airflow_settings.yaml
+airflow.cfg
+unittests.cfg
+webserver_config.py
+
+########################################
+# DATA (Medallion)
+########################################
+data/bronze/
+data/silver/
+data/gold/
+data/raw/
+data/tmp/
+data/cache/
+!data/**/README.md
+
+########################################
+# SECRETS
+########################################
+.env
+.env.*
+*.env
+!.env.example
+!.env.template
+secrets.json
+credentials.json
+spotify_credentials.json
+*.key
+*.pem
+*.p12
+
+########################################
+# SISTEMA / EDITOR
+########################################
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini

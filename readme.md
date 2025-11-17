@@ -226,6 +226,24 @@ git clone https://github.com/ericksootano/spotify-etl-airflow-docker
 cd spotify-etl-airflow-docker
 ```
 
+#### ⚙️ Configuración del Entorno
+
+Este repositorio incluye **archivos de ejemplo** para que configures tu entorno sin exponer credenciales reales:
+
+- `docker-compose.example.yaml` → Copia y renombra como `docker-compose.yaml`.  
+  Edita las variables de entorno (`POSTGRES_USER`, `POSTGRES_PASSWORD`, etc.) según tu configuración local.
+
+- `Dockerfile.example` → Copia y renombra como `Dockerfile`.  
+  Personaliza dependencias o configuraciones adicionales si lo necesitas.
+
+- `src/config_example.py` → Copia y renombra como `config.py`.  
+  Define tus rutas y credenciales usando variables de entorno (`os.getenv`) en lugar de valores hardcodeados.
+
+- `.env.example` → Copia y renombra como `.env`.  
+  Coloca aquí tus claves y tokens (ej. `SPOTIFY_API_KEY`, `DATABASE_URL`).  
+
+
+
 ### 2. Construir y Ejecutar Contenedores
 
 ```bash
